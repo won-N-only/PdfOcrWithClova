@@ -4,6 +4,8 @@
 3. run_ocr.bat 실행
 """
 
+from openpyxl.styles import Border, Side
+from openpyxl import load_workbook
 import os
 import json
 import uuid
@@ -93,8 +95,7 @@ def save_table_data_to_excel(ocr_data, image_file):
     try:
         table_data = ocr_data['images'][0]['tables'][0]['cells']
     except (KeyError, IndexError):
-        print(
-            f"표가 아닙니다 {image_file}")
+        print(f"표가 아닙니다 {image_file}")
         return
 
     # 최대 행과 열의 수를 구합니다.
@@ -123,12 +124,10 @@ def save_table_data_to_excel(ocr_data, image_file):
         text = ' '.join(text_lines)
         table[row_idx][col_idx] = text
 
-        # 디버깅 출력
-
     # Pandas 데이터프레임으로 변환
     df = pd.DataFrame(table)
 
-    # Excel 파일로 저장
+    # Excel 파일로 저장 (우선 테두리 없이 저장)
     output_file = os.path.join(
         OUTPUT_DIR, f"{os.path.splitext(image_file)[0]}_output.xlsx")
     try:
@@ -136,6 +135,33 @@ def save_table_data_to_excel(ocr_data, image_file):
         print(f"Excel 파일로 저장 완료: {output_file}")
     except Exception as e:
         print(f"Excel 저장 중 오류 발생: {e}")
+        return
+
+    # 테두리를 추가하기 위해 openpyxl로 불러오기
+    add_thin_borders(output_file)
+
+
+def add_thin_borders(excel_file):
+    # 얇은 테두리 설정
+    thin_border = Border(
+        left=Side(style='thin'),
+        right=Side(style='thin'),
+        top=Side(style='thin'),
+        bottom=Side(style='thin')
+    )
+
+    # 엑셀 파일 불러오기
+    wb = load_workbook(excel_file)
+    ws = wb.active
+
+    # 각 셀에 얇은 테두리 추가
+    for row in ws.iter_rows():
+        for cell in row:
+            cell.border = thin_border
+
+    # 테두리가 추가된 엑셀 파일 저장
+    wb.save(excel_file)
+    print(f"얇은 테두리를 추가한 엑셀 파일을 저장했습니다: {excel_file}")
 
 
 if __name__ == "__main__":
