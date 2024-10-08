@@ -129,7 +129,7 @@ def save_table_data_to_excel(ocr_data, image_file):
 
     # Excel 파일로 저장 (우선 테두리 없이 저장)
     output_file = os.path.join(
-        OUTPUT_DIR, f"{os.path.splitext(image_file)[0]}_output.xlsx")
+        OUTPUT_DIR, f"{os.path.splitext(image_file)[0]}.xlsx")
     try:
         df.to_excel(output_file, index=False, header=False)
         print(f"Excel 파일로 저장 완료: {output_file}")

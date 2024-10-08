@@ -16,7 +16,7 @@ def merge_excel_files_with_blank_rows():
 
     # 첫 번째 파일 이름 가져오기
     first_file_name = os.path.splitext(excel_files[0])[0]
-    merged_file = f"{first_file_name}_merged_output.xlsx"
+    merged_file = f"{first_file_name}_merged.xlsx"
 
     # 병합할 파일 데이터를 저장할 데이터프레임
     combined_df = pd.DataFrame()
