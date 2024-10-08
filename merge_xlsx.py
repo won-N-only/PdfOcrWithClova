@@ -4,6 +4,7 @@ import pandas as pd
 
 # 폴더 경로 설정
 OUTPUT_DIR = "output"  # 병합할 엑셀 파일들이 저장된 폴더
+SAVE_DIR = "finished"
 
 
 def merge_excel_files_with_blank_rows():
@@ -26,7 +27,7 @@ def merge_excel_files_with_blank_rows():
         try:
             # 엑셀 파일 읽기
             df = pd.read_excel(file_path, header=None, engine='openpyxl')
-            
+
         except Exception as e:
             print(f"{file_path} 파일을 읽는 중 오류 발생: {e}")
             continue
@@ -40,7 +41,7 @@ def merge_excel_files_with_blank_rows():
         combined_df = pd.concat([combined_df, df], ignore_index=True)
 
     # 병합된 데이터프레임을 저장
-    output_file_path = os.path.join(OUTPUT_DIR, merged_file)
+    output_file_path = os.path.join(SAVE_DIR, merged_file)
     combined_df.to_excel(output_file_path, index=False, header=False)
     print(f"병합된 파일을 저장했습니다: {output_file_path}")
 
