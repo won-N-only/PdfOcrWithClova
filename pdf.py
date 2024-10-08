@@ -4,8 +4,6 @@
 3. run_ocr.bat 실행
 """
 
-from openpyxl.styles import Border, Side
-from openpyxl import load_workbook
 import os
 import json
 import uuid
@@ -127,7 +125,7 @@ def save_table_data_to_excel(ocr_data, image_file):
     # Pandas 데이터프레임으로 변환
     df = pd.DataFrame(table)
 
-    # Excel 파일로 저장 (우선 테두리 없이 저장)
+    # Excel 파일로 저장
     output_file = os.path.join(
         OUTPUT_DIR, f"{os.path.splitext(image_file)[0]}.xlsx")
     try:
