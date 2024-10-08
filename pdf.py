@@ -137,32 +137,6 @@ def save_table_data_to_excel(ocr_data, image_file):
         print(f"Excel 저장 중 오류 발생: {e}")
         return
 
-    # 테두리를 추가하기 위해 openpyxl로 불러오기
-    add_thin_borders(output_file)
-
-
-def add_thin_borders(excel_file):
-    # 얇은 테두리 설정
-    thin_border = Border(
-        left=Side(style='thin'),
-        right=Side(style='thin'),
-        top=Side(style='thin'),
-        bottom=Side(style='thin')
-    )
-
-    # 엑셀 파일 불러오기
-    wb = load_workbook(excel_file)
-    ws = wb.active
-
-    # 각 셀에 얇은 테두리 추가
-    for row in ws.iter_rows():
-        for cell in row:
-            cell.border = thin_border
-
-    # 테두리가 추가된 엑셀 파일 저장
-    wb.save(excel_file)
-    print(f"얇은 테두리를 추가한 엑셀 파일을 저장했습니다: {excel_file}")
-
 
 if __name__ == "__main__":
     process_local_images()
