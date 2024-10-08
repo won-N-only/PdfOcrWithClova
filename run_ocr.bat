@@ -1,3 +1,3 @@
 @echo off
-python pdf.py
+python main.py
 pause
